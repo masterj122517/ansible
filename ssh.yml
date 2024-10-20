@@ -1,0 +1,26 @@
+---
+- hosts: localhost  # 指定为本地主机
+  tasks:
+    - name: 创建 .ssh 目录
+      ansible.builtin.file:
+        path: ~/.ssh
+        state: directory
+        mode: '0700'
+
+    - name: 安装私钥
+      ansible.builtin.copy:
+        src: ./.ssh/id_ed25519  # 替换为你私钥的实际路径
+        dest: ~/.ssh/id_rsa
+        mode: '0600'
+
+    - name: 安装公钥
+      ansible.builtin.copy:
+        src: ./.ssh/id_ed25519.pub  # 替换为你公钥的实际路径
+        dest: ~/.ssh/id_rsa.pub
+        mode: '0644'
+
+    - name: 安装config
+      ansible.builtin.copy:
+        src: ./.ssh/config 
+        dest: ~/.ssh/config
+        mode: '0644'
